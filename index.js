@@ -33,7 +33,8 @@ console.log(processFirstItem(['foo','bar'],function(str){return str+str}));
   Counter1 uses closure and you can tell because there's a function inside a function.
   3. In what scenario would the counter1 code be preferable? In what scenario would 
      counter2 be better?  
-  
+  Counter1 - for when you need to more than one function to work together.
+  Counter2 - not ideal to use.
 */
 
 // counter1 code
@@ -82,10 +83,10 @@ Use the finalScore function below to do the following:
 }
 */ 
 
-function finalScore(inningcb){
+function finalScore(inningcb,number){
   return {
-    Home: inningcb(),
-    Away: inningcb()
+    Home: inningcb(number),
+    Away: inningcb(number)
   }
 }
   console.log('Task 3:', finalScore(inning,9));
@@ -142,9 +143,24 @@ Use the scoreboard function below to do the following:
 ]  
   */
 
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
+function scoreboard(getInningScorecb,inningcb,number) {
+  const newArray = [];
+  let homeScore = 0;
+  let awayScore = 0;
+  for(let i = 1; i < number; i++){
+    const inningScore = getInningScorecb(inningcb)
+    newArray.push(`Inning ${i}: Away ${inningScore.Away} 1 - Home ${inningScore.Home} 1`)
+    homeScore = homeScore + inningScore.Home;
+    awayScore = awayScore + inningScore.Away;
+  }
+  if(homeScore === awayScore){
+    newArray.push(`This game will require extra innings: Away ${awayScore} 10 - Home ${homeScore} 10`)
+  }else{
+    newArray.push(`Final Score: Away ${awayScore} 11 - Home ${homeScore} 12`)
+  }
+  return newArray;
 }
+console.log('Task: 5', scoreboard(getInningScore,inning,9));
 
 
 
